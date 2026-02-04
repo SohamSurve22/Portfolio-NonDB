@@ -1,0 +1,77 @@
+# Node modules
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build outputs
+/dist/
+/build/
+/out/
+/.vercel/
+/.turbo/
+
+# Vite
+/.vite/
+node_modules/.vite/
+
+# TypeScript
+*.tsbuildinfo
+
+# Environment files (ignore local and secret envs but keep examples)
+.env.local
+.env.*.local
+.env
+!.env.example
+
+# Coverage and test outputs
+/coverage/
+.nyc_output/
+/playwright-report/
+/jest/
+
+# Editor directories and workspace files
+.vscode/
+*.code-workspace
+.idea/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Misc caches
+.cache/
+.pnp.*
+
+# Package manager
+.pnpm-store/
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.yarnrc.yml
+
+# Misc
+*.local
+*.swo
+*.swp
+
+# Serverless / functions / deployment artifacts
+.serverless/
+.next/
+.nuxt/
+
+# Sensitive files
+*.pem
+*.key
+credentials.json
+
+# Windows Recycle Bin
+$RECYCLE.BIN/
