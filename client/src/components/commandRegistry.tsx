@@ -20,14 +20,14 @@ export type CommandContext = {
 export const commandRegistry: Record<string, (args: string[], ctx: CommandContext) => React.ReactNode | void> = {
     help: () => (
         <div className="grid grid-cols-[140px_1fr] gap-2 text-sm font-mono">
+            <span className="text-cyan-300 font-bold">whoami</span>
+            <span className="text-cyan-400/60">System user profile</span>
             <span className="text-cyan-300 font-bold">ls [path]</span>
             <span className="text-cyan-400/60">List directory contents</span>
             <span className="text-cyan-300 font-bold">cd [dir]</span>
             <span className="text-cyan-400/60">Change working directory</span>
             <span className="text-cyan-300 font-bold">cat [file]</span>
             <span className="text-cyan-400/60">Read file content</span>
-            <span className="text-cyan-300 font-bold">whoami</span>
-            <span className="text-cyan-400/60">System user profile</span>
             <span className="text-cyan-300 font-bold">skills --matrix</span>
             <span className="text-cyan-400/60">Technical proficiency matrix</span>
             <span className="text-cyan-300 font-bold">experience</span>

@@ -9,6 +9,7 @@ import { NavigationDock } from "@/components/NavigationDock";
 import { DetailOverlay } from "@/components/DetailOverlay";
 import { motion } from "framer-motion";
 import { useFileSystem, FSNode } from "@/hooks/useFileSystem";
+import { projects as projectData, skills as skillsData, experience as experienceData, certifications as certData } from "@/lib/data";
 import { commandRegistry, CommandContext } from "@/components/commandRegistry";
 
 type LogEntry = {
@@ -23,43 +24,50 @@ type OverlayState = {
   content: ReactNode;
 };
 
+const slug = (s: string) => s.replace(/[^\w]+/g, "-").replace(/^-|-$/g, "").toLowerCase();
+
 const INITIAL_FS: FSNode[] = [
   {
     name: "projects",
     type: "directory",
-    children: [
-      {
-        name: "secure-vault", type: "directory", children: [
-          { name: "README.md", type: "file", content: "SECURE_VAULT: Zero-trust architecture for enterprise asset management.\n\nSTACK: Next.js, Rust, PostgreSQL, AWS KMS.\n\nFEATURES:\n- AES-256 encryption at rest\n- Multi-signature approval workflows\n- Real-time audit trails" }
-        ]
-      },
-      {
-        name: "malware-scanner", type: "directory", children: [
-          { name: "README.md", type: "file", content: "MALWARE_SCANNER: Static and dynamic analysis engine for PE files.\n\nSTACK: Python, LibYara, Docker, C++.\n\nFEATURES:\n- Yara rule integration\n- Sandbox execution environment\n- Behavioral heuristic analysis" }
-        ]
-      }
-    ]
-  },
-  {
-    name: "experience",
-    type: "directory",
-    children: [
-      { name: "work_history.log", type: "file", content: "Run 'experience' or click the briefcase icon to view visual timeline." }
-    ]
+    children: projectData.map(p => ({
+      name: slug(p.title),
+      type: "directory",
+      children: [
+        {
+          name: "README.md",
+          type: "file",
+          content: `${p.title.toUpperCase()}\n\n${p.description}\n\nTech: ${p.techStack?.join(", ") || ""}\nRepo: ${p.repoUrl || ""}\nDemo: ${p.demoUrl || ""}`
+        }
+      ]
+    }))
   },
   {
     name: "skills",
     type: "directory",
-    children: [
-      { name: "matrix.dat", type: "file", content: "TECHNICAL PROFICIENCY MATRIX\n===========================\nOFFENSIVE: 85%\nDEFENSIVE: 92%\nNETWORKING: 88%\nCLOUD_SEC: 90%\nREVERSING: 78%" }
-    ]
+    children: skillsData.map(s => ({
+      name: `${slug(s.name)}.skill`,
+      type: "file",
+      content: `${s.name} (${s.category})\nProficiency: ${'▇'.repeat(s.proficiency)}${'▁'.repeat(5 - s.proficiency)}`
+    }))
+  },
+  {
+    name: "experience",
+    type: "directory",
+    children: experienceData.map((e, idx) => ({
+      name: `${slug(e.role)}-${idx + 1}.md`,
+      type: "file",
+      content: `${e.role} @ ${e.company}\n${e.duration}\n\n${e.description}`
+    }))
   },
   {
     name: "certificates",
     type: "directory",
-    children: [
-      { name: "verified_list.txt", type: "file", content: "List of verified credentials.\nRun 'certs' for visual verification." }
-    ]
+    children: certData.map(c => ({
+      name: `${slug(c.name)}.txt`,
+      type: "file",
+      content: `${c.name} — ${c.issuer}\n${c.date}\n\n${c.description}\n\nPDF: ${c.pdfUrl}`
+    }))
   },
   { name: "contact.exe", type: "file", content: "Run 'contact' to initialize secure handshake." },
   { name: "about.txt", type: "file", content: "Soham Surve |Cybersecurity Research Engineer\nResearches the convergence of artificial intelligence and security operations\nDevelops resilient systems, analyzes adversarial behavior, and advances AI-based detection and response" },
@@ -90,7 +98,7 @@ export default function Home() {
                 <p className="text-cyan-300 font-bold mb-1">SYSTEM_GUIDANCE:</p>
                 <p>• Use the <span className="text-white font-bold">GUI Dock</span> below or type commands</p>
                 <p>• Type <span className="text-white font-bold">skills --matrix</span> for technical proficiency</p>
-                <p>• Type <span className="text-white font-bold">analyze malware</span> to trigger heuristic scan</p>
+                <p>• Type <span className="text-white font-bold">help</span> to trigger Manual</p>
                 <p className="mt-2 text-[10px] text-cyan-500/40 italic">Note: Technical depth is preserved in detailed overlays.</p>
               </div>
             </div>

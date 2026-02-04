@@ -31,7 +31,7 @@ export const projects = [
         "id": "69824d1760134557b95f1fae"
     },
     {
-        "title": "Malware Analysis Sandbox",
+        "title": "PureEarth",
         "description": "PureEarth is an environmental sustainability platform that helps companies track and improve their ecological impact. This documentation will help you understand and use the platform effectively.",
         "techStack": [
             "Django",
